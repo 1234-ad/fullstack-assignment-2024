@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 from database import get_db, engine
 from models import Base
-from routers import auth, datasets, users
+from routers import auth, datasets, users, payments
 from auth_utils import verify_token
 
 load_dotenv()
@@ -38,6 +38,7 @@ security = HTTPBearer()
 app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 app.include_router(datasets.router, prefix="/datasets", tags=["Datasets"])
 app.include_router(users.router, prefix="/user", tags=["User"])
+app.include_router(payments.router, prefix="/payments", tags=["Payments"])
 
 @app.get("/")
 async def root():
