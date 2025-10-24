@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database for Task 3
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: datamart
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./task3-datamart/backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # Task 2: Site Generator Frontend
+  site-generator-frontend:
+    build:
+      context: ./task2-site-generator/frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:3001
+    depends_on:
+      - site-generator-backend
+
+  # Task 2: Site Generator Backend
+  site-generator-backend:
+    build:
+      context: ./task2-site-generator/backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+
+  # Task 3: DataMart Frontend
+  datamart-frontend:
+    build:
+      context: ./task3-datamart/frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+    depends_on:
+      - datamart-backend
+
+  # Task 3: DataMart Backend
+  datamart-backend:
+    build:
+      context: ./task3-datamart/backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/datamart
+      - STRIPE_SECRET_KEY=sk_test_your_stripe_key_here
+      - JWT_SECRET=your_jwt_secret_here
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
