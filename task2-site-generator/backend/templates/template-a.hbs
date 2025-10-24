@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{name}} - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family={{fontFamily}}:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: '{{fontFamily}}', sans-serif;
+            background: {{background}};
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        {{#if showProfilePicture}}
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 30px;
+            border: 4px solid {{primaryColor}};
+            display: block;
+        }
+        {{/if}}
+
+        .name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: {{primaryColor}};
+            margin-bottom: 15px;
+        }
+
+        .introduction {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .contact-btn {
+            background: {{primaryColor}};
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            background: {{secondaryColor}};
+            transform: translateY(-2px);
+        }
+
+        {{#if showSocialLinks}}
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: {{primaryColor}};
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: {{secondaryColor}};
+            transform: scale(1.1);
+        }
+        {{/if}}
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 30px 20px;
+            }
+            
+            .name {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        {{#if showProfilePicture}}
+        <img src="{{imageUrl}}" alt="{{name}}" class="profile-image">
+        {{/if}}
+        
+        <h1 class="name">{{name}}</h1>
+        <p class="introduction">{{introduction}}</p>
+        
+        <a href="mailto:{{email}}" class="contact-btn">Get in Touch</a>
+        
+        {{#if showSocialLinks}}
+        <div class="social-links">
+            <a href="{{twitterLink}}" class="social-link" target="_blank">TW</a>
+            <a href="{{githubLink}}" class="social-link" target="_blank">GH</a>
+        </div>
+        {{/if}}
+    </div>
+</body>
+</html>
